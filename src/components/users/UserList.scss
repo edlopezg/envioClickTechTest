@@ -1,0 +1,32 @@
+@import '../../styles/abstracts/variables';
+
+.user-list {
+    text-align: center;
+    color: $primary-color;
+    padding: 20px;
+  }
+  
+  .cards-container {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; // Alinear tarjetas en la fila
+    gap: 10px;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 250px; // Ancho fijo para las tarjetas
+    text-align: center; // Centrar el texto
+  
+    .user-image {
+      width: 100%; // Ajusta la imagen al ancho de la tarjeta
+      border-radius: 50%; // Opcional: hacer que la imagen sea redonda
+      margin-bottom: 10px; // Espacio entre la imagen y el texto
+    }
+  }

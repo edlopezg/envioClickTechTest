@@ -1,0 +1,25 @@
+.user-list-header {
+    display: flex;
+    justify-content: center;  /* Centra el contenido horizontalmente */
+    align-items: flex-end;      /* Alinea verticalmente */
+    flex-direction: column;   /* Si deseas que el botón esté debajo del título */
+  }
+  
+  .logout-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color:white ; /* Color de fondo */
+    color:#d9534f ;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1rem; /* Espacio encima del botón */
+    margin-bottom: 1rem;
+    margin-right: 2rem;
+  
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #d7b1b0; /* Color cuando se hace hover */
+    }
+  }

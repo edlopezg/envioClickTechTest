@@ -1,0 +1,25 @@
+.pagination {
+    display: flex;
+    justify-content: center; /* Centrar la paginación */
+    margin-top: 20px; /* Espaciado superior */
+  }
+  
+  .pagination button {
+    margin: 0 5px; /* Espaciado entre botones */
+    padding: 10px 15px; /* Relleno de los botones */
+    border: none; /* Sin borde */
+    background-color: white; /* Color de fondo */
+    color: #007bff ; /* Color del texto */
+    cursor: pointer; /* Cambiar cursor a puntero */
+    border-radius: 25px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición para el color de fondo */
+  }
+  
+  .pagination button:hover {
+    background-color: rgb(204, 221, 227); /* Color de fondo en hover */
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc; /* Color de fondo para botón deshabilitado */
+    cursor: not-allowed; /* Cursor para indicar que está deshabilitado */
+  }
