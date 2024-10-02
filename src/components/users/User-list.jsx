@@ -7,6 +7,7 @@ import './ExportStyle.scss';
 
 const MyUserList = ({ onLogout }) => {
   //Manejo de la APi 
+  
   const [dataApi, setDataApi] = useState([]);
   const [genderFilter, setGenderFilter] = useState('');
   const [nationalityFilter, setNationalityFilter] = useState('');
