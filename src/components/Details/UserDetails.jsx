@@ -40,7 +40,7 @@ const UserDetail = () => {
   return (
     <div className='user-detail-container'>
       <div className="user-detail">
-        <h2>User Details</h2>
+        <h2>Details</h2>
         <img src={userDetail.picture.large} alt={`${userDetail.name.first} ${userDetail.name.last}`} />
         <p>Title: {userDetail.name.title}</p>
         <p>First Name: {userDetail.name.first}</p>

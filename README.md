@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Proyecto EnvioClickTechTest
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descripción
+Este proyecto contiene una aplicación web que muestra una lista de usuarios tras iniciar sesión con las credenciales proporcionadas. La aplicación está desarrollada en React y utiliza diversas dependencias para su correcto funcionamiento.
 
-## Available Scripts
+## Requisitos
+- Node.js instalado en su sistema.
+- npm o yarn para gestionar los paquetes.
 
-In the project directory, you can run:
+## Pasos para levantar el proyecto en local
 
-### `npm start`
+### 1. Clonar el repositorio
+Ejecuta el siguiente comando en tu terminal para clonar el repositorio:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+git clone https://github.com/edlopezg/envioClickTechTest.git
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. Acceder a la carpeta del proyecto
+Accede a la carpeta donde clonaste el repositorio:
 
-### `npm test`
+```bash
+cd <nombre-de-la-carpeta-utilizado>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3. Instalar los módulos necesarios
+Dentro de la carpeta del proyecto, ejecuta el siguiente comando para instalar las dependencias:
 
-### `npm run build`
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. Instalar paquetes adicionales
+En caso de ser necesario, instala los siguientes paquetes para visualizar correctamente el proyecto:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install -g sass
+npm install sass
+npm install react-router-dom
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 5. Ejecutar el proyecto en local
+Una vez instaladas todas las dependencias, puedes levantar el proyecto localmente con el siguiente comando:
 
-### `npm run eject`
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 6. Visualización del proyecto
+Una vez que el servidor esté corriendo, abre tu navegador y visita la siguiente URL:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+http://localhost:3000/
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 7. Credenciales de acceso
+Para ingresar a la aplicación, utiliza las siguientes credenciales en el login:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Usuario:** Admin
+- **Contraseña:** admin2024
 
-## Learn More
+### 8. Interfaz del usuario
+Después de iniciar sesión, serás redirigido a la lista de usuarios donde podrás visualizar las funciones y la interfaz solicitada.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Tecnologías Utilizadas
+- React.js
+- Sass
+- FontAwesome Icons
+- React Router Dom
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Autor
+[edlopezg](https://github.com/edlopezg)

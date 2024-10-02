@@ -17,9 +17,9 @@ const MyLoginComponent = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Lógica de autenticación (simulada aquí)
-    const isAuthenticated = true; // Cambia esto según tu lógica real
+
+    // Verificar si el usuario y contraseña son correctos
+    const isAuthenticated = formData.userName === 'admin' && formData.password === 'admin2024';
 
     if (isAuthenticated) {
       // Llamar a la función onLogin que se pasa desde App.js
@@ -27,7 +27,7 @@ const MyLoginComponent = ({ onLogin }) => {
       navigate('/users'); // Redirigir a la lista de usuarios
     } else {
       // Manejar error de autenticación
-      alert('Login failed');
+      alert('Login failed. Incorrect username or password.');
     }
   };
 
@@ -43,6 +43,7 @@ const MyLoginComponent = ({ onLogin }) => {
             name="userName"
             value={formData.userName}
             onChange={handleChange}
+            placeholder="Enter username"
           />
         </div>
         <div className="form-group">
@@ -53,6 +54,7 @@ const MyLoginComponent = ({ onLogin }) => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            placeholder="Enter password"
           />
         </div>
         <button type="submit" className="btn-submit">Login</button>
