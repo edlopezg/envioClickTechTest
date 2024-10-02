@@ -1,0 +1,78 @@
+/* Estilos para el botón de enviar mensaje */
+.send-message-button {
+    background-color: #007bff; /* Color azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 8px 12px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave */
+    font-size: 14px; /* Tamaño de fuente */
+  }
+  
+  .send-message-button:hover {
+    background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
+  }
+  
+  /* Estilos para el formulario de mensaje */
+  .message-form {
+    position: fixed; /* Posiciona el modal de forma fija en la pantalla */
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Compensa el desplazamiento de la mitad */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  }
+  
+  .message-form-modal form {
+    display: flex; /* Flexbox para el formulario */
+    flex-direction: column; /* Coloca los elementos en columna */
+  }
+  
+  .message-form-modal label {
+    margin-bottom: 10px; /* Espaciado entre etiquetas */
+  }
+  
+  .message-form-modal input,
+  .message-form-modal textarea {
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    margin-top: 5px; /* Espaciado superior */
+    font-size: 14px; /* Tamaño de fuente */
+  }
+  
+  .message-form-modal button[type="submit"] {
+    background-color: #007bff; /* Color azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    margin-top: 10px; /* Espaciado superior */
+    transition: background-color 0.3s ease; /* Transición suave */
+  }
+  
+  .message-form-modal button[type="submit"]:hover {
+    background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
+  }
+  
+  .message-form-modal button[type="button"] {
+    background-color: #f44336; /* Color rojo */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    margin-top: 10px; /* Espaciado superior */
+    transition: background-color 0.3s ease; /* Transición suave */
+  }
+  
+  .message-form-modal button[type="button"]:hover {
+    background-color: #c62828; /* Color rojo más oscuro al pasar el mouse */
+  }
+  

@@ -1,0 +1,56 @@
+@import '../../styles/abstracts/variables';
+
+.user-detail-container {
+    background-color: $primary-color;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center;
+
+    .user-detail {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 48px;
+    padding: 50px;
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+  
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #555;
+    }
+  
+    .back-button {
+      background-color: $secondary-color;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color:$third-color;
+      }
+    }
+  }
+}
+

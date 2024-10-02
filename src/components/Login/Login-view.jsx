@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Login.scss';
 
 const MyLoginComponent = ({ onLogin }) => {
@@ -6,6 +7,8 @@ const MyLoginComponent = ({ onLogin }) => {
     userName: '',
     password: ''
   });
+  
+  const navigate = useNavigate(); // Inicializar useNavigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,8 +17,18 @@ const MyLoginComponent = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Llamar a la función onLogin que se pasa desde App.js
-    onLogin(formData);
+    
+    // Lógica de autenticación (simulada aquí)
+    const isAuthenticated = true; // Cambia esto según tu lógica real
+
+    if (isAuthenticated) {
+      // Llamar a la función onLogin que se pasa desde App.js
+      onLogin(formData);
+      navigate('/users'); // Redirigir a la lista de usuarios
+    } else {
+      // Manejar error de autenticación
+      alert('Login failed');
+    }
   };
 
   return (

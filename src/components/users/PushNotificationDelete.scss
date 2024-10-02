@@ -1,0 +1,36 @@
+.push-notification {
+    position: fixed;
+    bottom: -100px; /* Inicialmente fuera de la pantalla */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff6b6b;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 300px;
+    z-index: 1000;
+    transition: bottom 0.5s ease-in-out; /* Animación para deslizarse */
+  
+    &.show {
+      bottom: 20px; /* Muestra la notificación cuando tiene la clase `show` */
+    }
+  
+    button {
+      background-color: #333;
+      border: none;
+      color: white;
+      padding: 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #444;
+      }
+    }
+  }
+  

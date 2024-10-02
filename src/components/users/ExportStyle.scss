@@ -4,16 +4,16 @@
     .delete-button {
       display: none;
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 15px;
+      right: 15px;
       background-color: red;
       color: white;
       border: none;
       padding: 10px 10px;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 35px;
     }
-    .delete-button {
+    &:hover .delete-button {
       display: block;
     }
   }
@@ -91,11 +91,11 @@
     
         padding: 0.5rem 1rem;
         border: none;
-        background-color:#f57b00 ; /* Color de fondo */
+        background-color:$secondary-color ; /* Color de fondo */
         color:white ;
         font-size: 1rem;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 15px;
         margin-top: 1rem; /* Espacio encima del botón */
         margin-bottom: 1rem;
         margin-right: 2rem;
@@ -106,3 +106,7 @@
           background-color: $third-color; /* Color cuando se hace hover */
         }
       }
+
+
+
+

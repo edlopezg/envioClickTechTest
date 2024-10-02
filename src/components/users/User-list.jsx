@@ -1,99 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import './Logout.scss';
-import './Filter.scss';
-import './Pagination.scss';
-import './UserList.scss';
-import './ExportStyle.scss';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import "./Logout.scss";
+import "./Filter.scss";
+import "./Pagination.scss";
+import "./UserList.scss";
+import "./ExportStyle.scss";
+import "./SendMessage.scss";
+import "./PushNotificationDelete.scss";
 
 const MyUserList = ({ onLogout }) => {
-  //Manejo de la APi 
-  
   const [dataApi, setDataApi] = useState([]);
-  const [genderFilter, setGenderFilter] = useState('');
-  const [nationalityFilter, setNationalityFilter] = useState('');
+  const [genderFilter, setGenderFilter] = useState("");
+  const [nationalityFilter, setNationalityFilter] = useState("");
   const [ageRange, setAgeRange] = useState({ min: 0, max: 100 });
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10; 
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [userToDelete, setUserToDelete] = useState(null); // Estado para el usuario que se eliminará
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [showMessageForm, setShowMessageForm] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [messageData, setMessageData] = useState({ name: "", message: "" });
+  const [messagesSent, setMessagesSent] = useState({});
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportStatus, setExportStatus] = useState("");
+  const usersPerPage = 12;
 
-  //Consumo de la APi
+  // Consumo de la API
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=80')
+    fetch("https://randomuser.me/api/?results=80")
       .then((resp) => resp.json())
       .then((respData) => {
         setDataApi(respData.results);
       })
       .catch((error) => {
-        console.log('Error en la solicitud de la API', error);
+        console.log("Error en la solicitud de la API", error);
       });
   }, []);
 
+  // Manejo de selección de usuarios
   const handleUserSelected = (user) => {
-      setSelectedUsers((prevSelectedUser) => 
-      prevSelectedUser.includes(user) ?
-      prevSelectedUser.filter((u) => u !== user) :
-      [...prevSelectedUser, user]
-      );
+    setSelectedUsers((prevSelectedUser) =>
+      prevSelectedUser.includes(user)
+        ? prevSelectedUser.filter((u) => u !== user)
+        : [...prevSelectedUser, user]
+    );
   };
 
-  const convertToCsv = (users) => {
-    const headers = ['Title', 'FirstName' ,'LastName' ,'email'];
-    const csvRows = [
-      headers.join(','),
-      ...users.map((user) =>
-      [
-        user.name.title,
-        user.name.first,
-        user.name.last,
-        user.email,
-      ].join(',')
-      ),
-    ];
-    return csvRows.join('\n')
+  //Funciones para manejar el apartado del envio de mensaje al usuario
+  const handleSendMessage = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem(`user_${user.id.value}`, JSON.stringify(user));
+    setShowMessageForm(true);
   };
 
-  const downloadArchiveCsv = (csvContent) => {
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'users.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleMessageChange = (e) => {
+    const { name, value } = e.target;
+    setMessageData({ ...messageData, [name]: value });
   };
 
-  const exportSelectedUsers = () => {
-    alert('Exportación de usuarios en proceso...');
-    setTimeout(() => {
-      const csvContent = convertToCsv(selectedUsers);
-      downloadArchiveCsv(csvContent);
-      alert('La exportación ha finalizado.');
-    }, 2000);
+  const handleSubmitMessage = (e) => {
+    e.preventDefault();
+    if (currentUser) {
+      setMessagesSent((prevMessages) => ({
+        ...prevMessages,
+        [currentUser.id.value]: (prevMessages[currentUser.id.value] || 0) + 1,
+      }));
+    }
+    alert(
+      `Message sent to : ${currentUser.name.first}: ${messageData.message}`
+    );
+    setShowMessageForm(false);
+    setMessageData({ name: "", message: "" });
   };
 
-  const clearSelection = () => {
-    setSelectedUsers([]);
-  };
-
-  // Función para eliminar usuario
-  const confirmDeleteUser = (user) => {
-    setUserToDelete(user); // Guardar el usuario que queremos eliminar
-  };
-
-  const handleDelete = () => {
-    setDataApi((prevData) => prevData.filter((user) => user !== userToDelete));
-    setUserToDelete(null); // Resetear la confirmación después de eliminar
-  };
-
-  const handleCancelDelete = () => {
-    setUserToDelete(null); // Cancelar la operación de eliminación
-  };
-
-  // Función para filtrar los usuarios
+  // Funciones para filtrar usuarios
   const filteredUsers = dataApi.filter((user) => {
     const age = user.dob.age;
-
     return (
       (!genderFilter || user.gender === genderFilter) &&
       (!nationalityFilter || user.nat === nationalityFilter) &&
@@ -102,31 +85,142 @@ const MyUserList = ({ onLogout }) => {
     );
   });
 
+  // Apartado para el manejo de la paginacion
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // Funciones para implementar la eliminacion de los usuarios
+  const confirmDeleteUser = (user) => {
+    setUserToDelete(user);
+  };
+
+  const handleDelete = () => {
+    setDataApi((prevUsers) =>
+      prevUsers.filter((user) => user !== userToDelete)
+    );
+    setSelectedUsers((prevSelected) =>
+      prevSelected.filter((user) => user !== userToDelete)
+    );
+    setUserToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setUserToDelete(null);
+  };
+
+  // Funciones para convertir los datos a csv, hacer la operacion asincrona
+  // Exportar usuarios seleccionados a CSV
+  const exportSelectedUsers = async () => {
+    try {
+      // Mostrar que la operación está en proceso
+      setIsExporting(true);
+      setExportStatus("Exporting...");
+
+      // Simulamos una pequeña demora para imitar una operación asíncrona
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Crear los datos CSV
+      const csvData = selectedUsers.map((user) => {
+        return {
+          Name: `${user.name.first} ${user.name.last}`,
+          Email: user.email,
+          Gender: user.gender,
+          Nationality: user.nat,
+        };
+      });
+
+      const csvContent = [
+        ["Name", "Email", "Gender", "Nationality"],
+        ...csvData.map((user) => [
+          user.Name,
+          user.Email,
+          user.Gender,
+          user.Nationality,
+        ]),
+      ]
+        .map((e) => e.join(","))
+        .join("\n");
+
+      // Crear el archivo Blob y permitir la descarga
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "selected_users.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Actualizar el estado después de la exportación
+      setExportStatus("Export completed successfully!");
+    } catch (error) {
+      console.error("Export failed:", error);
+      setExportStatus("Export failed. Please try again.");
+    } finally {
+      // Desactivar el estado de exportación en proceso
+      setIsExporting(false);
+    }
+  };
+
+  // Funcion par limpiar las casillas en caso de que el usuario asi lo requiera
+  const clearSelection = () => {
+    setSelectedUsers([]);
+  };
+
   return (
-    <> 
-      <div style={{ backgroundColor:'#21233d' }} className="user-list-header">
-        <button onClick={onLogout} className="logout-button">Logout</button>
+    <>
+      <div style={{ backgroundColor: "#21233d" }} className="user-list-header">
+        <button onClick={onLogout} className="logout-button">
+          Logout
+        </button>
       </div>
-      <div style={{ backgroundColor: '#21233d', display: 'flex', justifyContent: 'center', padding: '10px' }}>
-      <h1 style={{color:'white', marginRight:'35px' , fontSize:'50px'}}>Welcome to user list</h1>
+      <div
+        style={{
+          backgroundColor: "#21233d",
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px",
+        }}
+      >
+        <h1 style={{ color: "white", marginRight: "35px", fontSize: "50px" }}>
+          Welcome to user list
+        </h1>
       </div>
 
-            <div style={{ backgroundColor: '#21233d', display: 'flex', justifyContent: 'center', padding: '10px' }}>
-        <button onClick={exportSelectedUsers} disabled={selectedUsers.length === 0} className="button-export-section">Export CSV </button>
-        <button onClick={clearSelection} disabled={selectedUsers.length === 0} className="button-export-section">Clean selection</button>
+      <div
+        style={{
+          backgroundColor: "#21233d",
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px",
+        }}
+      >
+        <div>
+          <button
+            onClick={exportSelectedUsers}
+            disabled={isExporting}
+            className={`button-export-section ${
+              isExporting ? "exporting" : ""
+            }`}
+          >
+            {isExporting ? "Exporting..." : "Export CSV"}
+          </button>
+        </div>
+        <button
+          onClick={clearSelection}
+          disabled={selectedUsers.length === 0}
+          className="button-export-section"
+        >
+          Clean select
+        </button>
       </div>
-        
 
- 
-
-      <div style={{marginTop:'40px'}} className="user-list">
+      <div style={{ marginTop: "40px" }} className="user-list">
         <div className="filter-controls">
           <div>
             <label>Age range:</label>
@@ -134,17 +228,27 @@ const MyUserList = ({ onLogout }) => {
               type="number"
               placeholder="Min"
               value={ageRange.min}
-              onChange={(e) => setAgeRange({ ...ageRange, min: parseInt(e.target.value) || 0 })}
+              onChange={(e) =>
+                setAgeRange({ ...ageRange, min: parseInt(e.target.value) || 0 })
+              }
             />
             <input
               type="number"
               placeholder="Max"
               value={ageRange.max}
-              onChange={(e) => setAgeRange({ ...ageRange, max: parseInt(e.target.value) || 100 })}
+              onChange={(e) =>
+                setAgeRange({
+                  ...ageRange,
+                  max: parseInt(e.target.value) || 100,
+                })
+              }
             />
           </div>
 
-          <select onChange={(e) => setNationalityFilter(e.target.value)} value={nationalityFilter}>
+          <select
+            onChange={(e) => setNationalityFilter(e.target.value)}
+            value={nationalityFilter}
+          >
             <option value="">Seleccionar nacionalidad</option>
             <option value="US">US</option>
             <option value="GB">UK</option>
@@ -152,55 +256,105 @@ const MyUserList = ({ onLogout }) => {
             <option value="MX">Mexico</option>
           </select>
 
-          <button onClick={() => setGenderFilter('male')}>Male</button>
-          <button onClick={() => setGenderFilter('female')}>Female</button>
-          <button onClick={() => setGenderFilter('')}>All users</button>
+          <button onClick={() => setGenderFilter("male")}>Male</button>
+          <button onClick={() => setGenderFilter("female")}>Female</button>
+          <button onClick={() => setGenderFilter("")}>All users</button>
         </div>
-        <div style={{ marginBottom:'40px'}}></div>
-        <div className='cards-container' >
+
+        <div style={{ marginBottom: "40px" }}></div>
+        <div className="cards-container">
           {currentUsers.map((user, index) => (
-            <div className='card' key={user.id.value || index}>
-              <label className='custom-checkbox'>
+            <div className="card" key={user.id.value || index}>
+              <label className="custom-checkbox">
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   onChange={() => handleUserSelected(user)}
                   checked={selectedUsers.includes(user)}
                 />
                 <span></span>
               </label>
-              <img src={user.picture.medium} alt={`${user.name.first} ${user.name.last}`} className='user-image' />
+              <img
+                src={user.picture.medium}
+                alt={`${user.name.first} ${user.name.last}`}
+                className="user-image"
+              />
               <p>Title: {user.name.title}</p>
               <p>First Name: {user.name.first}</p>
               <p>Last Name: {user.name.last}</p>
-              <button className="delete-button" onClick={() => confirmDeleteUser(user)}>Delete</button>
+              <button
+                className="delete-button"
+                onClick={() => confirmDeleteUser(user)}
+              >
+                Delete
+              </button>
+              {userToDelete && (
+                <div
+                  className={`push-notification ${userToDelete ? "show" : ""}`}
+                >
+                  <p>
+                    Are you sure you want to delete {userToDelete?.name?.first}?
+                  </p>
+                  <div>
+                    <button onClick={handleDelete}>Yes, delete</button>
+                    <button onClick={handleCancelDelete}>Cancel</button>
+                  </div>
+                </div>
+              )}
+              <Link
+                to={`/users/${user.id.value}`}
+                className="view-details-link"
+                onClick={() => handleSendMessage(user)}
+                state={{ messagesSent: messagesSent[user.id.value] || 0 }} // Pasar el conteo de mensajes enviados
+              >
+                Show Details{" "}
+                {messagesSent[user.id.value] > 0 &&
+                  `(${messagesSent[user.id.value]})`}{" "}
+              </Link>
+              <div style={{ marginTop: "15px" }}></div>
+              <button
+                className="send-message-button"
+                onClick={() => handleSendMessage(user)}
+              >
+                <FontAwesomeIcon icon={faPaperPlane} />
+              </button>
             </div>
           ))}
         </div>
 
-        {/* Paginación */}
-        <div className="pagination">
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              onClick={() => paginate(i + 1)}
-              className={currentPage === i + 1 ? 'active' : ''}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
+        {showMessageForm && currentUser && (
+          <div className="message-form">
+            <h2>Send Message to {currentUser.name.first}</h2>
+            <form onSubmit={handleSubmitMessage}>
+              <input
+                type="text"
+                name="message"
+                value={messageData.message}
+                onChange={handleMessageChange}
+                placeholder="Your message"
+                required
+              />
+              <button type="submit">Send</button>
+              <button type="button" onClick={() => setShowMessageForm(false)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        )}
       </div>
 
-      {/* Modal de confirmación de eliminación */}
-      {userToDelete && (
-        <div className="delete-confirmation-modal">
-          <p>Are you sure you want to delete {userToDelete.name.first} {userToDelete.name.last}?</p>
-          <button onClick={handleDelete}>Yes, delete</button>
-          <button onClick={handleCancelDelete}>Cancel</button>
-        </div>
-      )}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={currentPage === index + 1 ? "active" : ""}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </>
   );
 };
-// se agrega comentario de prueba 2.0
+
 export default MyUserList;

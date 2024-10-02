@@ -1,0 +1,11 @@
+@import '../../styles/abstracts/variables';
+
+
+.view-details-link {
+    color: #007bff; // Color del enlace
+    text-decoration: none; // Sin subrayado
+  }
+  
+  .view-details-link:hover {
+    text-decoration: underline; // Subrayado al pasar el mouse
+  }
