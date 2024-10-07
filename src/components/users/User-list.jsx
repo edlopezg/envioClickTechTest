@@ -11,10 +11,13 @@ import "./SendMessage.scss";
 import "./PushNotificationDelete.scss";
 
 const MyUserList = ({ onLogout }) => {
+  // Estado para el consumo de la APi
   const [dataApi, setDataApi] = useState([]);
+  // useState para manejar el estado de los filtros 
   const [genderFilter, setGenderFilter] = useState("");
   const [nationalityFilter, setNationalityFilter] = useState("");
   const [ageRange, setAgeRange] = useState({ min: 0, max: 100 });
+  //useState para manejar el estado de la paginacion
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [userToDelete, setUserToDelete] = useState(null);
@@ -38,14 +41,7 @@ const MyUserList = ({ onLogout }) => {
       });
   }, []);
 
-  // Manejo de selección de usuarios
-  const handleUserSelected = (user) => {
-    setSelectedUsers((prevSelectedUser) =>
-      prevSelectedUser.includes(user)
-        ? prevSelectedUser.filter((u) => u !== user)
-        : [...prevSelectedUser, user]
-    );
-  };
+
 
   //Funciones para manejar el apartado del envio de mensaje al usuario
   const handleSendMessage = (user) => {
@@ -86,8 +82,8 @@ const MyUserList = ({ onLogout }) => {
   });
 
   // Apartado para el manejo de la paginacion
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const indexOfLastUser = currentPage * usersPerPage; // = 1 * 12 = 12
+  const indexOfFirstUser = indexOfLastUser - usersPerPage; // 12 - 12 = 0
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
@@ -132,7 +128,7 @@ const MyUserList = ({ onLogout }) => {
           Nationality: user.nat,
         };
       });
-
+// Aqui se define la estructura que va a llevar el CSV
       const csvContent = [
         ["Name", "Email", "Gender", "Nationality"],
         ...csvData.map((user) => [
@@ -145,7 +141,7 @@ const MyUserList = ({ onLogout }) => {
         .map((e) => e.join(","))
         .join("\n");
 
-      // Crear el archivo Blob y permitir la descarga
+      // Crear y descargar  el archivo Blob
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
@@ -165,6 +161,15 @@ const MyUserList = ({ onLogout }) => {
       // Desactivar el estado de exportación en proceso
       setIsExporting(false);
     }
+  };
+
+    // Manejo de selección de usuarios
+  const handleUserSelected = (user) => {
+    setSelectedUsers((prevSelectedUser) =>
+      prevSelectedUser.includes(user)
+        ? prevSelectedUser.filter((u) => u !== user)
+        : [...prevSelectedUser, user]
+    );
   };
 
   // Funcion par limpiar las casillas en caso de que el usuario asi lo requiera

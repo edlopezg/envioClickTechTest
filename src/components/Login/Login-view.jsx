@@ -11,7 +11,9 @@ const MyLoginComponent = ({ onLogin }) => {
   const navigate = useNavigate(); // Inicializar useNavigate
 
   const handleChange = (e) => {
+    // Destructuracion del target
     const { name, value } = e.target;
+    //spred operator
     setFormData({ ...formData, [name]: value });
   };
 
