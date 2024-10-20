@@ -21,16 +21,16 @@ const MyLoginComponent = ({ onLogin }) => {
     e.preventDefault();
 
     // Verificar si el usuario y contraseña son correctos
-    const isAuthenticated = formData.userName === 'admin' && formData.password === 'admin2024';
+    
 
-    if (isAuthenticated) {
+    
       // Llamar a la función onLogin que se pasa desde App.js
       onLogin(formData);
       navigate('/users'); // Redirigir a la lista de usuarios
-    } else {
+    
       // Manejar error de autenticación
-      alert('Login failed. Incorrect username or password.');
-    }
+      
+    
   };
 
   return (
