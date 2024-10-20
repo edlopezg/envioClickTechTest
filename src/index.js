@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import MyLoginComponent from './components/Login/Login-view';
-import MyUserList from './components/users/User-list';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

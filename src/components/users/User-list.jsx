@@ -26,7 +26,7 @@ const MyUserList = ({ onLogout }) => {
   const [messageData, setMessageData] = useState({ name: "", message: "" });
   const [messagesSent, setMessagesSent] = useState({});
   const [isExporting, setIsExporting] = useState(false);
-  const [exportStatus, setExportStatus] = useState("");
+  const [setExportStatus] = useState("");
   const usersPerPage = 12;
 
   // Consumo de la API
