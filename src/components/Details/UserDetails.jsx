@@ -17,7 +17,6 @@ const UserDetail = () => {
       setUserDetail(JSON.parse(storedUser));
     } else {
       // Si no se encuentra en el localStorage, puedes hacer una solicitud a la API
-      // Cambia esta línea según la API que uses
       fetch(`https://randomuser.me/api/?results=1`)
         .then((resp) => resp.json())
         .then((respData) => {
